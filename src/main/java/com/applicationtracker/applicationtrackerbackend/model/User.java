@@ -103,7 +103,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.email; // username here means unique info about user
     }
 
     @Override
