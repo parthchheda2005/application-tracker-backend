@@ -45,6 +45,14 @@ public class Application {
     public Application() {
     }
 
+
+    public Application(User user, Resume resume, String company, String position) {
+        this.user = user;
+        this.resume = resume;
+        this.company = company;
+        this.position = position;
+    }
+
     public Resume getResume() {
         return resume;
     }
