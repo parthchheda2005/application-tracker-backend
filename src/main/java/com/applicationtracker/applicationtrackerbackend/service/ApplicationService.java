@@ -23,7 +23,6 @@ public class ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final ResumeRepository resumeRepository;
     private final UserRepository userRepository;
-    private final User user;
 
     public ApplicationService(ApplicationRepository applicationRepository,
                               ResumeRepository resumeRepository,
@@ -31,13 +30,13 @@ public class ApplicationService {
         this.applicationRepository = applicationRepository;
         this.resumeRepository = resumeRepository;
         this.userRepository = userRepository;
-        // get user
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        this.user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public GetApplicationsDto getApplications(int page, int pageSize, String sortBy) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         Pageable pageable;
         if (sortBy.isEmpty()) {
             pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
@@ -54,6 +53,10 @@ public class ApplicationService {
     }
 
     public Application createApplication(CreateApplicationRequestDto req) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         Resume resume = resumeRepository.findById(req.getResumeId())
                 .orElseThrow(() -> new RuntimeException("Resume not found"));
 

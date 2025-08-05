@@ -1,5 +1,6 @@
 package com.applicationtracker.applicationtrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "application")
+@Table(name = "resume")
 public class Resume {
 
     @Id
@@ -19,6 +20,7 @@ public class Resume {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @Column(name = "firebase_file_path")
@@ -27,7 +29,8 @@ public class Resume {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
     private List<Application> applications = new ArrayList<>();
 
     @CreationTimestamp
@@ -37,6 +40,12 @@ public class Resume {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    public Resume(User user, String firebaseFilePath, String name) {
+        this.user = user;
+        this.firebaseFilePath = firebaseFilePath;
+        this.name = name;
+    }
 
     public Resume() {
     }

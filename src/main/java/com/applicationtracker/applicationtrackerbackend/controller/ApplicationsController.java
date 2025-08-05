@@ -18,7 +18,7 @@ public class ApplicationsController {
         this.applicationService = applicationService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<ApiResponseDto> createApplication(@RequestBody CreateApplicationRequestDto req) {
         try {
             Application app = applicationService.createApplication(req);
@@ -33,7 +33,7 @@ public class ApplicationsController {
         }
     }
 
-    @GetMapping("/all-applications")
+    @GetMapping
     public ResponseEntity<ApiResponseDto> getApplications(@RequestParam int page,
                                                           @RequestParam int pageSize,
                                                           @RequestParam String sortBy) {

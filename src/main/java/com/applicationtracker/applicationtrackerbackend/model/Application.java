@@ -1,6 +1,7 @@
 package com.applicationtracker.applicationtrackerbackend.model;
 
 import com.applicationtracker.applicationtrackerbackend.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,10 +19,12 @@ public class Application {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
+    @JsonIgnore
     private Resume resume;
 
     @Column(name = "company")
@@ -44,7 +47,6 @@ public class Application {
 
     public Application() {
     }
-
 
     public Application(User user, Resume resume, String company, String position) {
         this.user = user;
