@@ -38,7 +38,7 @@ public class ApplicationService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Pageable pageable;
-        if (sortBy.isEmpty()) {
+        if (sortBy == null || sortBy.isBlank()) {
             pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
         } else {
             pageable = PageRequest.of(page, pageSize, Sort.by(sortBy).descending());

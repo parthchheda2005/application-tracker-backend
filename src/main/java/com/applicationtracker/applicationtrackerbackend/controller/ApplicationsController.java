@@ -39,7 +39,9 @@ public class ApplicationsController {
                                                           @RequestParam String sortBy) {
 
         try {
-            GetApplicationsDto getApplicationsDto = applicationService.getApplications(page, pageSize, sortBy);
+            if (page == 0) throw new RuntimeException("Page must be > 0");
+
+            GetApplicationsDto getApplicationsDto = applicationService.getApplications(page - 1, pageSize, sortBy);
             return ResponseEntity.ok(new ApiResponseDto(
                     "Successfully retrieved applications",
                     true,

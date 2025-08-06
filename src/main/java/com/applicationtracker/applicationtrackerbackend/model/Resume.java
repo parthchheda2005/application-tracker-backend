@@ -19,11 +19,11 @@ public class Resume {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "userId", nullable = false)
     @JsonIgnore
     private User user;
 
-    @Column(name = "firebase_file_path")
+    @Column(name = "firebaseFilePath")
     private String firebaseFilePath;
 
     @Column(name = "name")

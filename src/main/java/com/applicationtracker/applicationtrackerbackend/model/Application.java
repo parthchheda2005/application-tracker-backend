@@ -18,12 +18,12 @@ public class Application {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "userId", nullable = false)
     @JsonIgnore
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "resume_id", nullable = false)
+    @JoinColumn(name = "resumeId", nullable = false)
     @JsonIgnore
     private Resume resume;
 
