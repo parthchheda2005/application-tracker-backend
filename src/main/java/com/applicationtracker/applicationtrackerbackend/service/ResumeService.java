@@ -35,4 +35,11 @@ public class ResumeService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return resumeRepository.findAllByUser(user);
     }
+
+    public void deleteResume(Long id) {
+        Resume resume = resumeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resume not found, can't delete"));
+        // TODO: handle deleting resume from firebase
+        resumeRepository.delete(resume);
+    }
 }
