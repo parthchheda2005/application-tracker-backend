@@ -1,17 +1,17 @@
 package com.applicationtracker.applicationtrackerbackend.dto;
 
-public class CreateApplicationRequestDto {
+public class SaveApplicationDto {
     private String company;
     private String position;
     private Long resumeId;
 
-    public CreateApplicationRequestDto(String company, String position, Long userId, Long resumeId) {
+    public SaveApplicationDto(String company, String position, Long userId, Long resumeId) {
         this.company = company;
         this.position = position;
         this.resumeId = resumeId;
     }
 
-    public CreateApplicationRequestDto() {
+    public SaveApplicationDto() {
     }
 
     public String getCompany() {

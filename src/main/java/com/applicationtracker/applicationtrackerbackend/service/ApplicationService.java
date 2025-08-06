@@ -1,10 +1,11 @@
 package com.applicationtracker.applicationtrackerbackend.service;
 
-import com.applicationtracker.applicationtrackerbackend.dto.CreateApplicationRequestDto;
 import com.applicationtracker.applicationtrackerbackend.dto.GetApplicationsDto;
+import com.applicationtracker.applicationtrackerbackend.dto.SaveApplicationDto;
 import com.applicationtracker.applicationtrackerbackend.model.Application;
 import com.applicationtracker.applicationtrackerbackend.model.Resume;
 import com.applicationtracker.applicationtrackerbackend.model.User;
+import com.applicationtracker.applicationtrackerbackend.model.enums.Status;
 import com.applicationtracker.applicationtrackerbackend.repository.ApplicationRepository;
 import com.applicationtracker.applicationtrackerbackend.repository.ResumeRepository;
 import com.applicationtracker.applicationtrackerbackend.repository.UserRepository;
@@ -52,7 +53,12 @@ public class ApplicationService {
         return new GetApplicationsDto(totalElements, totalPages, content);
     }
 
-    public Application createApplication(CreateApplicationRequestDto req) {
+    public Application getApplicationById(Long id) {
+        return applicationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public Application createApplication(SaveApplicationDto req) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -63,5 +69,39 @@ public class ApplicationService {
         Application app = new Application(user, resume, req.getCompany(), req.getPosition());
 
         return applicationRepository.save(app);
+    }
+
+    public Application updateStatus(Long id, String status) throws RuntimeException {
+        Application application = applicationRepository.findById(id).orElse(null);
+        if (application == null) throw new RuntimeException("No application with the id");
+
+        Status newStatus;
+        try {
+            newStatus = Status.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new RuntimeException(status + " is not a type of status");
+        }
+        application.setStatus(newStatus);
+
+        return applicationRepository.save(application);
+    }
+
+    public Application updateApplication(Long id, SaveApplicationDto dto) {
+        Application application = applicationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resume not found"));
+        Resume resume = resumeRepository.findById(dto.getResumeId())
+                .orElseThrow(() -> new RuntimeException("Resume not found"));
+
+        application.setResume(resume);
+        application.setCompany(dto.getCompany());
+        application.setPosition(dto.getPosition());
+
+        return applicationRepository.save(application);
+    }
+
+    public void deleteApplication(Long id) {
+        Application application = applicationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resume not found"));
+        applicationRepository.delete(application);
     }
 }
