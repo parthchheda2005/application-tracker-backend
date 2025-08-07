@@ -1,6 +1,7 @@
 package com.applicationtracker.applicationtrackerbackend.service;
 
 import com.applicationtracker.applicationtrackerbackend.dto.CreateResumeDto;
+import com.applicationtracker.applicationtrackerbackend.dto.UpdateResumeDto;
 import com.applicationtracker.applicationtrackerbackend.model.Resume;
 import com.applicationtracker.applicationtrackerbackend.model.User;
 import com.applicationtracker.applicationtrackerbackend.repository.ResumeRepository;
@@ -33,7 +34,7 @@ public class ResumeService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        return resumeRepository.findAllByUser(user);
+        return resumeRepository.findAllByUserOrderByCreatedAtDesc(user);
     }
 
     public void deleteResume(Long id) {
@@ -41,5 +42,15 @@ public class ResumeService {
                 .orElseThrow(() -> new RuntimeException("Resume not found, can't delete"));
         // TODO: handle deleting resume from firebase
         resumeRepository.delete(resume);
+    }
+
+    public Resume updateResume(Long id, UpdateResumeDto dto) {
+        Resume resume = resumeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No resume found with given id"));
+
+        resume.setName(dto.getName());
+        resume.setFirebaseFilePath(dto.getFirebaseFilePath());
+
+        return resumeRepository.save(resume);
     }
 }
