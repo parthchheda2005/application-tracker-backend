@@ -23,8 +23,8 @@ public class Resume {
     @JsonIgnore
     private User user;
 
-    @Column(name = "firebaseFilePath")
-    private String firebaseFilePath;
+    @Column(name = "azureBlobPath")
+    private String azureBlobPath;
 
     @Column(name = "name")
     private String name;
@@ -41,9 +41,9 @@ public class Resume {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    public Resume(User user, String firebaseFilePath, String name) {
+    public Resume(User user, String azureBlobPath, String name) {
         this.user = user;
-        this.firebaseFilePath = firebaseFilePath;
+        this.azureBlobPath = azureBlobPath;
         this.name = name;
     }
 
@@ -66,12 +66,12 @@ public class Resume {
         this.user = user;
     }
 
-    public String getFirebaseFilePath() {
-        return firebaseFilePath;
+    public String getAzureBlobPath() {
+        return azureBlobPath;
     }
 
-    public void setFirebaseFilePath(String firebaseFilePath) {
-        this.firebaseFilePath = firebaseFilePath;
+    public void setAzureBlobPath(String azureBlobPath) {
+        this.azureBlobPath = azureBlobPath;
     }
 
     public String getName() {

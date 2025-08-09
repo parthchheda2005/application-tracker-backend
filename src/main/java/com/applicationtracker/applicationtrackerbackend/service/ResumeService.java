@@ -26,7 +26,7 @@ public class ResumeService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        Resume resume = new Resume(user, dto.getFirebaseFilePath(), dto.getName());
+        Resume resume = new Resume(user, dto.getAzureBlobPath(), dto.getName());
         return resumeRepository.save(resume);
     }
 
@@ -49,7 +49,7 @@ public class ResumeService {
                 .orElseThrow(() -> new RuntimeException("No resume found with given id"));
 
         resume.setName(dto.getName());
-        resume.setFirebaseFilePath(dto.getFirebaseFilePath());
+        resume.setAzureBlobPath(dto.getAzureBlobPath());
 
         return resumeRepository.save(resume);
     }

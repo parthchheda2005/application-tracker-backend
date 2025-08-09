@@ -2,11 +2,11 @@ package com.applicationtracker.applicationtrackerbackend.dto;
 
 public class UpdateResumeDto {
     String name;
-    String firebaseFilePath;
+    String azureBlobPath;
 
-    public UpdateResumeDto(String name, String firebaseFilePath) {
+    public UpdateResumeDto(String name, String azureBlobPath) {
         this.name = name;
-        this.firebaseFilePath = firebaseFilePath;
+        this.azureBlobPath = azureBlobPath;
     }
 
     public String getName() {
@@ -17,11 +17,11 @@ public class UpdateResumeDto {
         this.name = name;
     }
 
-    public String getFirebaseFilePath() {
-        return firebaseFilePath;
+    public String getAzureBlobPath() {
+        return azureBlobPath;
     }
 
-    public void setFirebaseFilePath(String firebaseFilePath) {
-        this.firebaseFilePath = firebaseFilePath;
+    public void setAzureBlobPath(String azureBlobPath) {
+        this.azureBlobPath = azureBlobPath;
     }
 }

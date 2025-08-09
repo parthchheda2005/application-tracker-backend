@@ -3,7 +3,7 @@ package com.applicationtracker.applicationtrackerbackend.dto;
 public class CreateResumeDto {
 
     String name;
-    String firebaseFilePath;
+    String azureBlobPath;
 
     public String getName() {
         return name;
@@ -13,11 +13,11 @@ public class CreateResumeDto {
         this.name = name;
     }
 
-    public String getFirebaseFilePath() {
-        return firebaseFilePath;
+    public String getAzureBlobPath() {
+        return azureBlobPath;
     }
 
-    public void setFirebaseFilePath(String firebaseFilePath) {
-        this.firebaseFilePath = firebaseFilePath;
+    public void setAzureBlobPath(String azureBlobPath) {
+        this.azureBlobPath = azureBlobPath;
     }
 }
