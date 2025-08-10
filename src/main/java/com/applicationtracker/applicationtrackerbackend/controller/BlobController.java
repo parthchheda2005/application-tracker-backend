@@ -46,7 +46,7 @@ public class BlobController {
     @GetMapping("/{fileName}")
     public ResponseEntity<ApiResponseDto> getUrl(@PathVariable String fileName) {
         try {
-            String url = blobService.generateBlobSasUrl(fileName, 120);
+            String url = blobService.generateBlobSasUrl(fileName, 5);
             ApiResponseDto response = new ApiResponseDto("File uploaded successfully", true, url);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

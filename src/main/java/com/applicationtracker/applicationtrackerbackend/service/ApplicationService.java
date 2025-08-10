@@ -41,8 +41,10 @@ public class ApplicationService {
         Pageable pageable;
         if (sortBy == null || sortBy.isBlank()) {
             pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
-        } else {
+        } else if (sortBy.equals("createdAt") || sortBy.equals("updatedAt")) {
             pageable = PageRequest.of(page, pageSize, Sort.by(sortBy).descending());
+        } else {
+            pageable = PageRequest.of(page, pageSize, Sort.by(sortBy).ascending());
         }
         Page<Application> apps = applicationRepository.findByUserId(user.getId(), pageable);
 
