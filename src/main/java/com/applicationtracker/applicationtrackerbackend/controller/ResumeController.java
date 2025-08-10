@@ -37,7 +37,9 @@ public class ResumeController {
     public ResponseEntity<ApiResponseDto> getAllResumes() {
         try {
             List<Resume> resumes = resumeService.getAllResumes();
-            return ResponseEntity.ok(new ApiResponseDto("Successfully created Resume!", true, resumes));
+            return ResponseEntity.ok(new ApiResponseDto("Successfully fetched all Resumes!",
+                    true,
+                    resumes));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponseDto("Internal Server Error", false));
         }
@@ -58,7 +60,7 @@ public class ResumeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseDto> updateResume(@PathVariable Long id, UpdateResumeDto dto) {
+    public ResponseEntity<ApiResponseDto> updateResume(@PathVariable Long id, @RequestBody UpdateResumeDto dto) {
         try {
             return ResponseEntity.ok(new ApiResponseDto(
                     "Successfully updated Resume!",

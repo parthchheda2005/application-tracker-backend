@@ -16,10 +16,12 @@ public class ResumeService {
 
     private ResumeRepository resumeRepository;
     private UserRepository userRepository;
+    private AzureBlobService blobService;
 
-    public ResumeService(ResumeRepository resumeRepository, UserRepository userRepository) {
+    public ResumeService(ResumeRepository resumeRepository, UserRepository userRepository, AzureBlobService blobService) {
         this.resumeRepository = resumeRepository;
         this.userRepository = userRepository;
+        this.blobService = blobService;
     }
 
     public Resume createResume(CreateResumeDto dto) {
@@ -40,7 +42,7 @@ public class ResumeService {
     public void deleteResume(Long id) {
         Resume resume = resumeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Resume not found, can't delete"));
-        // TODO: handle deleting resume from firebase
+        blobService.deleteBlob(resume.getAzureBlobPath());
         resumeRepository.delete(resume);
     }
 
@@ -48,9 +50,14 @@ public class ResumeService {
         Resume resume = resumeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No resume found with given id"));
 
-        resume.setName(dto.getName());
-        resume.setAzureBlobPath(dto.getAzureBlobPath());
+        if (dto.getAzureBlobPath() != null) {
+            blobService.deleteBlob(resume.getAzureBlobPath());
+            resume.setAzureBlobPath(dto.getAzureBlobPath());
+        }
 
+        if (dto.getName() != null) {
+            resume.setName(dto.getName());
+        }
         return resumeRepository.save(resume);
     }
 }
