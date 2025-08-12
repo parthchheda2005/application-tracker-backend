@@ -43,4 +43,13 @@ public class AnalyticsController {
     public ResumeRatingResponseDto getResumeRating() {
        return geminiService.getResumeRating();
     }
+
+    @GetMapping("/has-applications")
+    public boolean hasApplications() {
+        try {
+            return applicationService.hasApplications();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

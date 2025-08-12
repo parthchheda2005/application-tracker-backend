@@ -168,5 +168,11 @@ public class ApplicationService {
         return counts;
     }
 
+    public boolean hasApplications() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return !applicationRepository.findAll().isEmpty();
+    }
 
 }
